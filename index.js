@@ -39,26 +39,51 @@ const auth = (req, res, next) => {
 
 // making a single url for differnt method of request
 // API - Endpoint - Route
-server.get("/product/:id", auth, (req, res) => {
-    console.log(req.params)    // also we can get with params
-  // api level middleware (auth) 
-  res.json({ type: "GET" });
+
+// POST create                   REST API                             C R U D
+server.post("/products", (req, res) => {
+  products.push(req.body);
+  res.status(201).json(req.body);
 });
 
-server.post("/", auth, (req, res) => {
-  res.json({ type: "POST" });
+// READ products GET all
+server.get("/products", (req, res) => {
+  res.json(products);
 });
 
-server.patch("/", (req, res) => {
-  res.json({ type: "PATCH" });
+// READ GET specific one
+server.get("/products/:id", (req, res) => {
+  console.log(+req.params.id);
+  const id = +req.params.id;
+  const product = products.find((prd) => prd.id === id);
+
+  res.json(product);
 });
 
-server.put("/", (req, res) => {
-  res.json({ type: "PUT" });
+// UPDATE PUT specific one
+server.put("/products/:id", (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex((prd) => prd.id === id);
+  products.splice(productIndex, 1, { ...req.body, id: id });
+  res.status(201).json();
 });
 
-server.delete("/", (req, res) => {
-  res.json({ type: "DELETE" });
+// UPDATE Patch specific one
+server.patch("/products/:id", (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex((prd) => prd.id === id);
+  const product = products[productIndex];
+  products.splice(productIndex, 1, { ...product, ...req.body });
+  res.status(201).json();
+});
+
+// DELETE Delete specific one
+server.delete("/products/:id", (req, res) => {
+  const id = +req.params.id;
+  const productIndex = products.findIndex((prd) => prd.id === id);
+  const product = products[productIndex];
+  products.splice(productIndex, 1);
+  res.status(201).json(product);
 });
 
 server.get("/demo", (req, res) => {
