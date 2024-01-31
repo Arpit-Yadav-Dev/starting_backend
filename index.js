@@ -35,7 +35,7 @@ const auth = (req, res, next) => {
   //     res.sendStatus(401);
   //   }
   next();
-};
+};  
 
 // making a single url for differnt method of request
 // API - Endpoint - Route
