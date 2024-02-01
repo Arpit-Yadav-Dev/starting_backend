@@ -16,6 +16,10 @@ Welcome to my journey of learning backend development with Node.js and Express! 
   - Implemented basic CRUD operations for a RESTful API.
   - Explored routing in Express to handle different HTTP methods.
   
+- **Day 4: MVC (Model-View-Controller) Pattern**
+  - File Structure for MVC.
+  - Re-usable code for multiple CRUD .
+  
 ## How to Use
 
 1. Clone the repository:
