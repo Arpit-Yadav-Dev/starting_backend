@@ -18,7 +18,8 @@ Welcome to my journey of learning backend development with Node.js and Express! 
   
 - **Day 4: MVC (Model-View-Controller) Pattern**
   - File Structure for MVC.
-  - Re-usable code for multiple CRUD .
+  - Re-usable code for multiple CRUD.
+  - Seprating Controller from routes.
   
 ## How to Use
 
