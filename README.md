@@ -20,6 +20,11 @@ Welcome to my journey of learning backend development with Node.js and Express! 
   - File Structure for MVC.
   - Re-usable code for multiple CRUD.
   - Seprating Controller from routes.
+
+- **Day 5: DATABASE CLOUD SETUP**
+  - Mongoshell.
+  - Atlas,Compass setup.
+  - .env file use.
   
 ## How to Use
 
