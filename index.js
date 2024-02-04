@@ -1,4 +1,5 @@
 // using express server
+require('dotenv').config()
 const express = require("express");
 const morgan = require("morgan");
 const { userInfo } = require("os");
@@ -7,11 +8,14 @@ const productController = require("./controller/product");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 
+console.log('env',process.env)
+
+
 server.use(express.json()); // for reading body
 // making my own custom middleware (application level)
 
 server.use(morgan("default")); // using the third party middleware
-server.use(express.static("public")); // this is for giving the file access from public folder files (http://localhost:8080/data.json)
+server.use(express.static(process.env.PUBLIC_DIR)); // this is for giving the file access from public folder files (http://localhost:8080/data.json)
 
 server.use((req, res, next) => {
   console.log(
@@ -40,4 +44,4 @@ const auth = (req, res, next) => {
 //view = like what we see or server side template rendering
 //controller = controll the logic between the model and view or logic
 
-server.listen(8080, () => console.log("Server Started"));
+server.listen(process.env.PORT, () => console.log("Server Started"));
