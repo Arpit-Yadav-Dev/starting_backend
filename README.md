@@ -25,6 +25,10 @@ Welcome to my journey of learning backend development with Node.js and Express! 
   - Mongoshell.
   - Atlas,Compass setup.
   - .env file use.
+
+  - **Day 6: DATABASE CONNECTIVITY AND SCHEMA**
+  - Mongoose.
+  - Mongoose schema.
   
 ## How to Use
 
