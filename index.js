@@ -3,36 +3,22 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 const { userInfo } = require("os");
 const server = express();
 const productController = require("./controller/product");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 
-console.log("env", process.env);
+// console.log("env", process.env);
 // db connection
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/");
+  await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
   console.log("Database Connected");
 }
 
 // schema
-const productSchema = new Schema({
-  title: String,
-  description: String,
-  price: Number,
-  discountPercentage: Number,
-  rating: Number,
-  brand: String,
-  category: String,
-  thumbnail: String,
-  images: [String],
-});
-
-const Product = mongoose.model('Product', productSchema);
 
 server.use(express.json()); // for reading body
 // making my own custom middleware (application level)
