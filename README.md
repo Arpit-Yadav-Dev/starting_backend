@@ -37,6 +37,9 @@ Welcome to my journey of learning backend development with Node.js and Express! 
   - Mongoose Validation.
   - Throw Error.
 
+  - **Day 8: CRUD WITH MONGOOSE**
+  - Different Request.
+
 ## How to Use
 
 1. Clone the repository:
