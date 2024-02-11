@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const { userInfo } = require("os");
 const server = express();
 const productController = require("./controller/product");
@@ -19,7 +20,7 @@ async function main() {
 }
 
 // schema
-
+server.use(cors());
 server.use(express.json()); // for reading body
 // making my own custom middleware (application level)
 
