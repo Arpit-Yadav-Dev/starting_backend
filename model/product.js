@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  title: { type: String, required: true ,unique:true},
+  title: { type: String, required: true, unique: true },
   description: String,
   price: { type: Number, required: true },
   discountPercentage: {
@@ -14,6 +14,7 @@ const productSchema = new Schema({
     type: Number,
     min: [1, "rating can not be less then 1"],
     max: [5, "rating can not be greater then 5"],
+    default: 1,
   },
   brand: { type: String, required: true },
   category: { type: String, required: true },

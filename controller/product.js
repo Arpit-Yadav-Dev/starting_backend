@@ -7,8 +7,7 @@ exports.createProduct = async (req, res) => {
   const product = new Product(req.body);
   try {
     const savedProduct = await product.save();
-    console.log({ savedProduct });
-    res.status(201).json(savedProduct);
+    res.status(201).json({ message: "Data Added Successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err });
@@ -57,6 +56,6 @@ exports.deleteProduct = async (req, res) => {
     const doc = await Product.findOneAndDelete({ _id: id });
     res.status(201).json(doc);
   } catch (error) {
-    res.status(400).json(error);  
+    res.status(400).json(error);
   }
 };
