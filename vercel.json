@@ -5,7 +5,7 @@
       "use": "@vercel/mode"
     },
     {
-      "src": "build/",
+      "src": "build/**",
       "use": "@vercel/static"
     }
   ],
