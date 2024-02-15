@@ -15,7 +15,7 @@ const userRouter = require("./routes/user");
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+  await mongoose.connect(process.env.MONGO_URL);
   console.log("Database Connected");
 }
 
