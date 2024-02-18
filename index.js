@@ -55,3 +55,4 @@ const auth = (req, res, next) => {
 //controller = controll the logic between the model and view or logic
 
 server.listen(process.env.PORT, () => console.log("Server Started"));
+module.exports = server;
