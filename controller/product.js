@@ -2,6 +2,26 @@ const fs = require("fs");
 const model = require("../model/product");
 const mongoose = require("mongoose");
 const Product = model.Product;
+const ejs = require("ejs");
+const path = require("path");
+
+exports.getAllProductsSSR = async (req, res) => {
+  try {
+    const products = await Product.find();
+    ejs.renderFile(
+      path.resolve(__dirname, "../pages/index.ejs"),
+      { products: products },
+      
+      function (err, str) {
+        res.send(str)
+      }
+    );
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.createProduct = async (req, res) => {
   const product = new Product(req.body);

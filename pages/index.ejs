@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+      }
+
+      .price {
+        color: grey;
+        font-size: 22px;
+      }
+
+      .card button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+      }
+
+      .card button:hover {
+        opacity: 0.7;
+      }
+    </style>
+    <script>
+      async function deleteProduct(id) {
+        console.log(id);
+        // const response = await fetch("/products/" + id, {
+        //   method: "DELETE",
+        // });
+
+        const response = await fetch("/products/" + id, {
+          method: "DELETE",
+        });
+        // by doing the below this we are removing the product from frontend instantly
+        const doc = await response.json();
+        const el = document.getElementById(doc._id);
+        el.remove();
+        if (!response.ok) {
+          console.error("Error deleting product:", response.statusText);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <% for(let product of products) {%> <% if(product){%>
+    <div class="card" id="<%= product._id %>">
+      <img src="<%= product.thumbnail%>" alt="image" style="width: 100%" />
+      <h1><%= product.title%></h1>
+      <p class="price">$<%= product.price%></p>
+      <p><%= product.description%></p>
+      <p>
+        <button onclick="deleteProduct(`<%= product._id %>`)">Delete</button>
+      </p>
+    </div>
+    <% }%> <% }%>
+  </body>
+</html>
