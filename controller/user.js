@@ -2,17 +2,19 @@ const fs = require("fs");
 const model = require("../model/user");
 const mongoose = require("mongoose");
 const User = model.user;
+const jwt = require("jsonwebtoken");
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
   const user = new User(req.body);
-  user.save((err, doc) => {
-    console.log({ err, doc });
-    if (err) {
-      res.status(400).json(err);
-    } else {
-      res.status(201).json(doc);
-    }
-  });
+  var token = jwt.sign({ email: req.body.email }, "shhhhh");
+  user.token = token
+  try {
+    const doc = await user.save();
+    res.status(201).json(doc);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
 };
 
 exports.getAllUsers = (req, res) => {
