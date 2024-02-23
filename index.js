@@ -10,6 +10,13 @@ const productController = require("./controller/product");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const jwt = require("jsonwebtoken");
+const authRouter = require("./routes/auth");
+const fs = require("fs");
+const path = require("path");
+const publicKey = fs.readFileSync(
+  path.resolve(__dirname, "./public.key"),
+  "utf-8"
+);
 
 // console.log("env", process.env);
 // db connection
@@ -20,13 +27,10 @@ async function main() {
   console.log("Database Connected");
 }
 const authentication = (req, res, next) => {
-  const token = req.get("authorization").split("Bearer ")[1];
-  // console.log(token);
-  console.log("jhkj");
-  // console.log(decoded);
-
   try {
-    var decoded = jwt.verify(token, process.env.SECRET);
+    const token = req.get("authorization").split("Bearer ")[1];
+    var decoded = jwt.verify(token, publicKey);
+    console.log(decoded);
     if (decoded.email) {
       next();
     } else {
@@ -43,6 +47,7 @@ server.use(express.json()); // for reading body
 // making my own custom middleware (application level)
 
 server.use(morgan("default")); // using the third party middleware
+server.use("/auth", authRouter.router);
 server.use(express.static(process.env.PUBLIC_DIR)); // this is for giving the file access from public folder files (http://localhost:8080/data.json)
 
 server.use((req, res, next) => {
