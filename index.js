@@ -9,6 +9,7 @@ const server = express();
 const productController = require("./controller/product");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
+const jwt = require("jsonwebtoken");
 
 // console.log("env", process.env);
 // db connection
@@ -18,6 +19,23 @@ async function main() {
   await mongoose.connect(process.env.MONGO_URL);
   console.log("Database Connected");
 }
+const authentication = (req, res, next) => {
+  const token = req.get("authorization").split("Bearer ")[1];
+  // console.log(token);
+  console.log("jhkj");
+  // console.log(decoded);
+
+  try {
+    var decoded = jwt.verify(token, process.env.SECRET);
+    if (decoded.email) {
+      next();
+    } else {
+      res.sendStatus(401);
+    }
+  } catch {
+    res.sendStatus(401);
+  }
+};
 
 // schema
 server.use(cors());
@@ -37,8 +55,8 @@ server.use((req, res, next) => {
   ); //making a logger for server activities
   next(); // use of next to move ahead from middleware otherwise it gets stuck here
 });
-server.use("/products", productRouter.router); // this is the base url in simple terms
-server.use("/users", userRouter.router); // this is for the users
+server.use("/products", authentication, productRouter.router); // this is the base url in simple terms
+server.use("/users", authentication, userRouter.router); // this is for the users
 const auth = (req, res, next) => {
   //   if (req.body.password == 123) {
   //     // http://localhost:8080/?password=123 for req.query.password

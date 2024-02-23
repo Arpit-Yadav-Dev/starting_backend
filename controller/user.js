@@ -2,23 +2,15 @@ const fs = require("fs");
 const model = require("../model/user");
 const mongoose = require("mongoose");
 const User = model.user;
-const jwt = require("jsonwebtoken");
 
-exports.createUser = async (req, res) => {
-  const user = new User(req.body);
-  var token = jwt.sign({ email: req.body.email }, "shhhhh");
-  user.token = token
+exports.getAllUsers = async (req, res) => {
   try {
-    const doc = await user.save();
-    res.status(201).json(doc);
-  } catch (err) {
-    console.error(err);
-    res.status(400).json(err);
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-};
-
-exports.getAllUsers = (req, res) => {
-  res.json(users);
 };
 
 exports.getUser = (req, res) => {
