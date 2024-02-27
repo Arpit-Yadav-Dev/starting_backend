@@ -13,12 +13,15 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.getUser = (req, res) => {
-  console.log(+req.params.id);
-  const id = +req.params.id;
-  const user = users.find((prd) => prd.id === id);
-
-  res.json(user);
+exports.getUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
 exports.replaceUser = (req, res) => {
