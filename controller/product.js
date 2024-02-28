@@ -11,12 +11,11 @@ exports.getAllProductsSSR = async (req, res) => {
     ejs.renderFile(
       path.resolve(__dirname, "../pages/index.ejs"),
       { products: products },
-      
+
       function (err, str) {
-        res.send(str)
+        res.send(str);
       }
     );
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -34,10 +33,18 @@ exports.createProduct = async (req, res) => {
   }
 };
 
+// http://localhost:8080/products?price=-1   but working below one !!
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    console.log(req.query)
+    let query = Product.find();
+    if (req.query) {
+      const products = await query.sort(req.query).exec();
+      res.json(products);
+    } else {
+      const products = await query.exec();
+      res.json(products);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
